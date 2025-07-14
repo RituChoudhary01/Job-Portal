@@ -62,7 +62,7 @@ function AddJob() {
           <p className='mb-2'>Job Salary</p>
           <input className='w-full px-3 py-2 border-2 border-gray-300 rounded sm:w-[120px]' min={0} onChange={e=>setSalary(e.target.value)} type='Number' placeholder='2500'/>
         </div>
-        <button className='w-28 py-3 mt-4 bg-black text-white rounded'>Add</button>
+        <button className='w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
       </form>
     </div>
   )
