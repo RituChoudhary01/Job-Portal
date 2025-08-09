@@ -20,11 +20,10 @@ export const getJobById = async(req , res)=>{
   select:'-password'
  })
  if(!job){
-  return res.json({
-   success:true,
-   job 
-  })
+  return res.json({success:false,message:'Job not found.'})
  }
+ res.json({ success:true,job })
+
  }catch(error){
   res.json({success:false,message:error.message})
 }

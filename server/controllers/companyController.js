@@ -10,7 +10,7 @@ import { application } from "express";
 export const registerCompany = async(req,res)=>{
  const {name,email,password} = req.body
  const imageFile = req.file;
- if(!name || !email || !password || !imageFile){
+ if(!name || !email || !password || !imageFile){  
   return res.json({success:false,message:"Missing Details"})
  }
  try{
@@ -39,17 +39,19 @@ export const registerCompany = async(req,res)=>{
     },
     token: generateToken(company._id)
   })
-
- }catch(error){
+  }catch(error){
   res.json({success:false, message:error.message})
  }
 }
 
 // Company login
-export const loginCompany = async()=>{
+export const loginCompany = async(req, res)=>{
 const {email,password} = req.body;
 try{
   const company = await Company.findOne({email})
+  if(!company){
+    return res.json({success:false,message:"Invalid email or password"})
+  }
   if(await bcrypt.compare(password,company.password)){
     res.json({
       success:true,
@@ -72,8 +74,9 @@ try{
 
 export const getCompanyJobApplicants = async(req , res)=>{
   try{
-  const company = req.company
-  res.json({success:true,company})
+  const companyId = req.company._id
+  const applications = await JobApplication.find({companyId}).populate('userId','name image resume').populate('jobId','title location category level salary').exec()
+  res.json({success:true,applications})
   }catch(error){
    res.json({
     success:false,message:error.message
@@ -82,7 +85,14 @@ export const getCompanyJobApplicants = async(req , res)=>{
 }
 // get company data
 export const getCompanyData = async(req,res)=>{
-
+  try{
+    const company = req.company
+    res.json({success:true,company})
+  }catch(error){
+    res.json({
+     success:false,message:error.message
+    })
+   }
 }
 // Post a new Job
 export const postJob = async(req,res)=>{
@@ -98,7 +108,6 @@ export const postJob = async(req,res)=>{
       companyId,
       date:Date.now(),
       level,category
-
     })
     await newJob.save()
     res.json({success:true,newJob})
@@ -117,22 +126,13 @@ try{
     const applicants = await JobApplication.find({jobId: job._id});
     return {...job.toObject(),applicants:applicants.length}
   }))
-  res.json({success:true,jobsData:jobs})
+  res.json({success:true,jobsData})
 }catch(error){
   res.json({success:false,message:error.message})
 }
 }
 // change Job Application Status
 export const ChangeJobApplicationStatus = async(req , res)=>{
- try{
-  const companyId = req.company._id
-  // Find job applications for the user and populate releted data
-  const applications = await JobApplication.find({companyId}).populate('userId','name image resume').populate('jobId','title location category level salary').exec()
-
-  return res.json({success:true,applications})
- }catch(error){
-  res.json({success:false, message:error.message})
- }
  try{
  const {id,status} = req.body
 //  Find Job applocation and update status

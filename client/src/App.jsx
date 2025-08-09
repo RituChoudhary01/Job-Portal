@@ -19,6 +19,7 @@ function App() {
    return (
 
     <div>
+    {/* {showRecruiterLogin && <RecruiterLogin />} */}
     {showRecruiterLogin && <RecruiterLogin />}
     <ToastContainer/>
     <Routes>

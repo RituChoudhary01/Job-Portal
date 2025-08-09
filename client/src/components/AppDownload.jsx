@@ -17,7 +17,7 @@ function AppDownload() {
 
          </div>
         </div>
-        <img  className='absolute w-80 right-0 bottom-0 mr-32 max-lg:hidden' src={assets.app_main_img}></img>
+        <img  className='absolute w-80 right-0 bottom-0 mr-32 max-lg:hidden' src={assets.app_main_img}/>
       </div>
     </div>
   )

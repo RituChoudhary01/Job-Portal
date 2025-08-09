@@ -3,6 +3,7 @@ import Quill from 'quill';
 import { JobCategories, JobLocations } from '../assets/assets';
 import axios from 'axios';
 import { AppContext } from '../context/AppContext';
+import { toast } from 'react-toastify';
 
 
 function AddJob() {
@@ -19,6 +20,7 @@ function AddJob() {
     try{
     const description = quillRef.current.root.innerHTML
     const {data} = await axios.post(backendUrl+'/api/company/post-job',{title,description,location,salary,category,level},{headers:{token:companyToken}})
+    console.log(data);
     if(data.success){
       toast.success(data.message)
       setTitle('')
@@ -38,7 +40,7 @@ function AddJob() {
         theme:'snow',
       })
     }
-  })
+  },[])
   return (
     <div>
       <form onSubmit={onSubmitHandler} className='container p-4 flex flex-col w-full items-start gap-3'>
@@ -81,7 +83,7 @@ function AddJob() {
         </div>
         <div>
           <p className='mb-2'>Job Salary</p>
-          <input className='w-full px-3 py-2 border-2 border-gray-300 rounded sm:w-[120px]' min={0} onChange={e=>setSalary(e.target.value)} type='Number' placeholder='2500'/>
+          <input className='w-full px-3 py-2 border-2 border-gray-300 rounded sm:w-[120px]' min={0} onChange={e=>setSalary(Number(e.target.value))} type='Number' placeholder='2500'/>
         </div>
         <button className='w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
       </form>

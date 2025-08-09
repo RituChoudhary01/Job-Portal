@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 export const AppContext = createContext()
 
 // Create the provider component
@@ -25,7 +26,8 @@ export const AppContextProvider = (props) => {
   // Function to fetch jobs
   const fetchJobs = async() => {
     try{
-      const {data} = await axios(backendUrl+'/api/jobs')
+      const {data} = await axios.get(backendUrl+'/api/jobs')
+      console.log(data);
       if(data.success){
         setJobs(data.jobs)
         console.log(data.jobs);
@@ -40,6 +42,7 @@ export const AppContextProvider = (props) => {
   const fetchCompanyData = async()=>{
     try{
      const {data} = await axios.get(backendUrl+'/api/company/company',{headers:{token:companyToken}})
+     console.log(data);
      if(data.success){
       setCompanyData(data.company)
      }else{
@@ -54,6 +57,7 @@ export const AppContextProvider = (props) => {
     try{
       const token = await getToken();
       const {data} = await axios.get(backendUrl+'/api/users/user',{headers:{Authorization:`Bearer ${token}`}})
+      console.log(data);
       if(data.success){
         setUserData(data.user)
       }else{
@@ -67,9 +71,10 @@ export const AppContextProvider = (props) => {
   const fetchUserApplications = async()=>{
     try{
       const token = await getToken()
-      const {data} = await axios.get(backendUrl+'/api/user/applications',
+      const {data} = await axios.get(backendUrl+'/api/users/applications',
         {headers:{Authorization:`Bearer ${token}`}}
       )
+      console.log(data);
       if(data.success){
         setUserApplications(data.applications)
       }else{
@@ -116,3 +121,6 @@ export const AppContextProvider = (props) => {
     </AppContext.Provider>
   )
 }
+
+
+

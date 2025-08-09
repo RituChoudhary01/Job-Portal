@@ -6,6 +6,9 @@ import Footer from '../components/Footer'
 import { AppContext } from '../context/AppContext'
 import { useUser } from '@clerk/clerk-react'
 import axios from 'axios'
+import { useAuth } from '@clerk/clerk-react';
+import { toast } from 'react-toastify'
+
 function Application() {
   const {user} = useUser()
   const {getToken} = useAuth()
@@ -18,7 +21,9 @@ function Application() {
    formData.append('resume',resume)
    const token = await getToken()
    const {data} = await axios.post(backendUrl+'/api/user/update-resume',formData,{headers:{Authorization:`Bearer ${token}`}})
+   console.log(data);
    if(data.success){
+    toast.success(data.message)
     await fetchUserData()
    }else{
     toast.error(data.message)

@@ -1,19 +1,21 @@
-import React, { useContext, useEffect } from 'react'
-import { manageJobsData } from '../assets/assets'
+import React, { useContext, useEffect, useState } from 'react'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import Loading from '../components/Loading'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function ManageJobs() {
   const navigate = useNavigate()
-  const [jobs,setJobs] = useState(false)
+  const [jobs,setJobs] = useState([])
   const {backendUrl,companyToken} = useContext(AppContext)
 
   // Function to fetch company Job Application data
   const fetchCompanyJobs = async()=>{
   try{
     const {data} = await axios.get(backendUrl+'/api/company/list-jobs',{headers:{token:companyToken}})
+    console.log(data);
     if(data.success){
       setJobs(data.jobsData.reverse())
      }else{
@@ -24,11 +26,12 @@ function ManageJobs() {
   }
   }
   // Function to change job visibility
-  const changeJobVisiblity = async(id)=>{
+  const changeJobVisiblity = async(id)=>{ 
     try{
      const {data} = await axios.post(backendUrl+'/api/company/change-visiblity',{
       id
      },{headers:{token:companyToken}})
+     console.log(data);
      if(data.success){
       toast.success(data.message)
       fetchCompanyJobs()
@@ -84,5 +87,4 @@ function ManageJobs() {
     </div>
   ):<Loading/>
 }
-
 export default ManageJobs

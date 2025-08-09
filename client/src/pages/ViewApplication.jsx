@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { assets, viewApplicationsPageData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
 import Loading from '../components/Loading'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 function ViewApplication() {
   const {backendUrl , companyToken} = useContext(AppContext)
-  const [applicants, setApplicants] = useState(false)
+  //const [applicants, setApplicants] = useState(false)
+  const [applicants, setApplicants] = useState([])
   // Function to fetch company Job Applications data
   const fetchCompanyJobApplications = async()=>{
     try{
       const {data} = await axios.get(backendUrl+'/api/company/applicants',{headers:{token:companyToken}})
+      console.log(data);
       if(data.success){
        setApplicants(data.applications.reverse())
       }else{
@@ -24,6 +27,7 @@ function ViewApplication() {
   const ChangeJobApplicationStatus = async(id,status)=>{
     try{
      const {data} = await axios.post(backendUrl+'/api/company/change-status',{id,status},{headers:{token:companyToken}})
+     console.log(data);
      if(data.success){
       fetchCompanyJobApplications()
      }else{
@@ -38,7 +42,7 @@ function ViewApplication() {
       fetchCompanyJobApplications()
     }
   },[companyToken])
-  return applicants ? applicants.length == 0 ? (<div className='flex items-center justify-center h-[70vh]'>
+  return applicants ? applicants.length === 0 ? (<div className='flex items-center justify-center h-[70vh]'>
     <p className='text-xl sm:text-2xl'>No Applications Available </p>
   </div>):(
     <div className='container mx-auto p-4'>
@@ -66,7 +70,7 @@ function ViewApplication() {
                 <td className='py-2 px-4 border-b max-sm:hidden'>{applicant.jobId.location}</td>
                 <td className='py-2 px-4 border-b'>
                   <a href={applicant.userId.resume} 
-                  className='bg-blue-50 text-blue-400 px-3 py-1 rounded inline-flex gap-2 items-center' target='-blank'>Resume
+                  className='bg-blue-50 text-blue-400 px-3 py-1 rounded inline-flex gap-2 items-center' target='_blank'>Resume
                   <img src={assets.resume_download_icon}/></a>
                 </td>
                 <td className='py-2 px-4 border-b relative'>
