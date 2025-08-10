@@ -92,7 +92,7 @@ function Application() {
       </div>
       <Footer/>
     </>
-  )
-}
+  )}
+
 
 export default Application
