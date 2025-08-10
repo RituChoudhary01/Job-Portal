@@ -57,7 +57,6 @@ export const AppContextProvider = (props) => {
     try{
       const token = await getToken();
       const {data} = await axios.get(backendUrl+'/api/users/user',{headers:{Authorization:`Bearer ${token}`}})
-      console.log(data);
       if(data.success){
         setUserData(data.user)
       }else{
@@ -74,7 +73,6 @@ export const AppContextProvider = (props) => {
       const {data} = await axios.get(backendUrl+'/api/users/applications',
         {headers:{Authorization:`Bearer ${token}`}}
       )
-      console.log(data);
       if(data.success){
         setUserApplications(data.applications)
       }else{

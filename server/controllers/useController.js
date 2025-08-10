@@ -88,8 +88,11 @@ export const updateUserResume = async (req, res) => {
     }
 
     if (resumeFile) {
-      const resumeUpload = await cloudinary.uploader.upload(resumeFile.path);
+      const resumeUpload = await cloudinary.uploader.upload(resumeFile.path, {
+        resource_type: 'auto'
+      });
       userData.resume = resumeUpload.secure_url;
+      
     } else {
       return res.status(400).json({ success: false, message: 'No resume file provided' });
     }

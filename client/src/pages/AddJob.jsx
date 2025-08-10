@@ -18,7 +18,8 @@ function AddJob() {
   const onSubmitHandler = async(e)=>{
     e.preventDefault();
     try{
-    const description = quillRef.current.root.innerHTML
+    // const description = quillRef.current.root.innerHTML
+    const description = quillRef.current.getText().trim(); 
     const {data} = await axios.post(backendUrl+'/api/company/post-job',{title,description,location,salary,category,level},{headers:{token:companyToken}})
     console.log(data);
     if(data.success){

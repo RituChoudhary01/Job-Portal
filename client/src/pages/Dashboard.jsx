@@ -35,7 +35,7 @@ function Dashboard
         <div className='flex items-center gap-3'>
           <p className='max-sm:hidden'> Welcome, {companyData.name} </p>
           <div className='relative group'>
-            <img className='w-8 border rounded-full' src={companyData.logo} alt="Company Logo"/>
+            <img className='w-8  rounded-full' src={companyData.image} alt="Company Logo"/>
             <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12'>
               <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
                 <li onClick = {logout} className='py-2 px-2 cursor-pointer pr-10'>Logout</li>

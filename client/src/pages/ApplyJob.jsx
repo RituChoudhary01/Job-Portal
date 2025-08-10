@@ -61,7 +61,7 @@ function ApplyJob() {
         return toast.error('Upload resume to apply')
       }
       const token = await getToken()
-      const {data} = await axios.post(backendUrl+'/api/user/apply',{jobId:jobData._id},{headers:{Authorization:`Bearer ${token}`}})
+      const {data} = await axios.post(backendUrl+'/api/users/apply',{jobId:jobData._id},{headers:{Authorization:`Bearer ${token}`}})
       if(data.success){
         toast.success(data.message)
         fetchUserApplications()
