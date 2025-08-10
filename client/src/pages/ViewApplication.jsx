@@ -13,7 +13,6 @@ function ViewApplication() {
   const fetchCompanyJobApplications = async()=>{
     try{
       const {data} = await axios.get(backendUrl+'/api/company/applicants',{headers:{token:companyToken}})
-      console.log(data);
       if(data.success){
        setApplicants(data.applications.reverse())
       }else{
@@ -27,7 +26,6 @@ function ViewApplication() {
   const ChangeJobApplicationStatus = async(id,status)=>{
     try{
      const {data} = await axios.post(backendUrl+'/api/company/change-status',{id,status},{headers:{token:companyToken}})
-     console.log(data);
      if(data.success){
       fetchCompanyJobApplications()
      }else{

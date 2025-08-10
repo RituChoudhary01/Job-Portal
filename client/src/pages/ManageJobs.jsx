@@ -15,7 +15,6 @@ function ManageJobs() {
   const fetchCompanyJobs = async()=>{
   try{
     const {data} = await axios.get(backendUrl+'/api/company/list-jobs',{headers:{token:companyToken}})
-    console.log(data);
     if(data.success){
       setJobs(data.jobsData.reverse())
      }else{
@@ -31,7 +30,6 @@ function ManageJobs() {
      const {data} = await axios.post(backendUrl+'/api/company/change-visiblity',{
       id
      },{headers:{token:companyToken}})
-     console.log(data);
      if(data.success){
       toast.success(data.message)
       fetchCompanyJobs()

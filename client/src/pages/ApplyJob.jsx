@@ -36,9 +36,7 @@ function ApplyJob() {
     try {
       console.log("Fetching job with ID:", id)
       console.log("Final URL:", `${backendUrl}/api/jobs/${id}`)
-      const { data } = await axios.get(`${backendUrl}/api/jobs/${id}`)
-      console.log("API response:", data) 
-  
+      const { data } = await axios.get(`${backendUrl}/api/jobs/${id}`)  
       if (data.success) {
         setjobData(data.job)
       } else {
@@ -84,7 +82,6 @@ function ApplyJob() {
     checkAlreadyApplied()
     }
   },[jobData,userApplications,id])
-  console.log(jobData)
   return jobData ?  (
     <>
     <Navbar/>

@@ -21,7 +21,6 @@ function Application() {
    formData.append('resume',resume)
    const token = await getToken()
    await axios.post(backendUrl + '/api/users/update-resume', formData, { headers: { Authorization: `Bearer ${token}` } })
-   console.log(data);
    if(data.success){
     toast.success(data.message)
     await fetchUserData()
