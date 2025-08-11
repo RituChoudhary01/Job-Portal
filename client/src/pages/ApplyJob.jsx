@@ -55,7 +55,7 @@ function ApplyJob() {
         return toast.error('Login to apply for jobs')
       }
       if(!userData.resume){
-        navigate('/application')
+        navigate('/applications')
         return toast.error('Upload resume to apply')
       }
       const token = await getToken()
