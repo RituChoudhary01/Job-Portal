@@ -69,8 +69,9 @@ try{
   const resumeFile = req.file
   const userData = await User.findById(userId)
    if(resumeFile){
-    const resumeUpload = await cloudinary.uploader.upload(resumeFile.path)
+    const resumeUpload = await cloudinary.uploader.upload(resumeFile.path,{ resource_type: "raw" })
     userData.resume = resumeUpload.secure_url
+    console.log("Resume upload response:", resumeUpload);
    }
    await userData.save()
    return res.json({success:true, message:'Resume Updated'})

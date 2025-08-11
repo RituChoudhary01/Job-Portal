@@ -13,7 +13,7 @@ function RecruiterLogin() {
   const[email,setEmail] = useState('')
   const[image,setImage] = useState(false)
   const[isTextDataSubmited,setIsTextDataSubmited] = useState(false)
-  const{setShowRecruiterLogin,backendUrl,setCompanyToken,setComapnyData} = useContext(AppContext)
+  const{setShowRecruiterLogin,backendUrl,setCompanyToken,setCompanyData} = useContext(AppContext)
   const onSubmitHandler = async(e)=>{
     e.preventDefault()
     if(state === 'Sign-Up' && isTextDataSubmited ){
@@ -23,7 +23,7 @@ function RecruiterLogin() {
       if(state == 'Login'){
         const {data} = await axios.post(backendUrl + '/api/company/login',{email,password})
         if(data.success){
-          setComapnyData(data.company)
+         setCompanyData(data.company)
           setCompanyToken(data.token)
           localStorage.setItem('companyToken',data.token)
           setShowRecruiterLogin(false)
@@ -41,7 +41,7 @@ function RecruiterLogin() {
 
         const {data} = await axios.post(backendUrl+'/api/company/register',formData)
         if(data.success){
-          setComapnyData(data.company)
+          setCompanyData(data.company)
           setCompanyToken(data.token)
           localStorage.setItem('companyToken',data.token)
           setShowRecruiterLogin(false)
